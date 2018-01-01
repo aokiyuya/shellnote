@@ -9,6 +9,8 @@ endif
 
 let g:loaded_shellnote = 1
 
+let s:save_cpo = &cpo
+set cpo&vim
 
 augroup shellnote
 	autocmd!
@@ -17,4 +19,7 @@ augroup END
 
 nnoremap <Leader>@ :call BashOut()<CR>
 nnoremap <C-p> <C-o>:call Previous_command()<CR>
-"
+
+
+let &cpo = s:save_cpo
+unlet s:save_cpo
