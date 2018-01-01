@@ -1,5 +1,10 @@
+" shellnote
+" Author: Yuya Aoki
+"
 
-function! BashOut() abort
+scriptencoding utf-8
+
+function! shellnote#bashOut() abort
 	let s:cmd = getline('.')
 	if s:cmd[0] == '>'
 		let s:cmd = s:cmd[1:]
@@ -13,7 +18,7 @@ function! BashOut() abort
 	normal! $
 endfunction
 
-function! Previous_command() abort
+function! shellnote#previous_command() abort
 	let s:now = getline('.')
 	echo search(s:now)
 	" let s:prev = getline('.')
@@ -27,7 +32,7 @@ PYTHON
 	normal! $
 endfunction
 
-function! InitCommandHist() abort
+function!  shellnote#init_command_hist() abort
 python3 << PYTHON
 import vim
 import sys

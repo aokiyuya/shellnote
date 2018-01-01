@@ -14,11 +14,11 @@ set cpo&vim
 
 augroup shellnote
 	autocmd!
-	autocmd VimEnter :call InitCommandHist()<CR>
+	autocmd VimEnter :call shellnote#init_command_hist()<CR>
 augroup END
 
-nnoremap <Leader>@ :call BashOut()<CR>
-nnoremap <C-p> <C-o>:call Previous_command()<CR>
+nnoremap <Leader>@ :call shellnote#bashOut()<CR>
+nnoremap <C-p> <C-o>:call shellnote#previous_command()<CR>
 
 
 let &cpo = s:save_cpo
