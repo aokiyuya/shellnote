@@ -16,7 +16,7 @@ on_ft = 'markdown'
 > ls 
 ```
 
-2. type <Leader> + @ in normal mode
+2. type \<Leader\> + @ in normal mode
 ```
 > ls
 
@@ -26,3 +26,8 @@ plugin
 testfile
 > 
 ```
+
+## License
+**MIT**
+
+
