@@ -4,18 +4,18 @@
 # Author: Yuya Aoki
 #
 ###########################
-import vim
 import re
 from collections import deque
 
 
 class ShellNote(object):
-    def __init__(self):
+    def __init__(self, filename):
         self.command_hist = deque()
-        for line in vim.current.buffer:
-            if re.match('^>', line):
-                # line.replace('^>\s*')
-                self.command_hist.append(line)
+        with open(filename) as fp:
+            for line in fp.readlines():
+                if re.match('^>', line):
+                    # line.replace('^>\s*')
+                    self.command_hist.append(line)
         self.set_hist_index(len(self.command_hist))
 
     def add_hist(self, command):
@@ -44,4 +44,12 @@ class ShellNote(object):
     def set_hist_index(self, index):
         self.index = index
 
+
+def server_init():
+    pass
+
+
+if __name__ == '__main__':
+    # server_init()
+    print("test")
 # EOF
