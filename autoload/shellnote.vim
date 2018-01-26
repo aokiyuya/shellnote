@@ -15,7 +15,7 @@ function! shellnote#bash_out() abort
 	call append('.', "> ")
 	let a:pos = getpos('.')
 	let a:pos[1] = a:pos[1] + 1
-	call setpos('.', s:pos)
+	call setpos('.', a:pos)
 	normal! $
 endfunction
 

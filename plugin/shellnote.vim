@@ -12,10 +12,15 @@ let g:loaded_shellnote = 1
 let s:save_cpo = &cpo
 set cpo&vim
 
-augroup shellnote
-	autocmd!
-	autocmd VimEnter * :call shellnote#init_command_hist()<CR>
-augroup END
+command! -nargs=0 ShellnoteInit call shellnote#init_command_hist()
+
+
+" augroup shellnote
+" 	autocmd!
+" 	autocmd VimEnter * ShellnoteInit
+" augroup END
+
+ShellnoteInit
 
 nnoremap <Leader>@ :call shellnote#bash_out()<CR>
 nnoremap <C-p> <C-o>:call shellnote#previous_command()<CR>
