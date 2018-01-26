@@ -32,6 +32,7 @@ function!  shellnote#init_command_hist() abort
 	let b:shellnote_pref = localtime()
 	let b:shellnore_filename = expand('%:p')
 	let b:shellnore_procid = 0
+	echo "test"
 	" サーバー立ち上げ
 	execute ":! python ".s:shellnote_server." &"
 endfunction
