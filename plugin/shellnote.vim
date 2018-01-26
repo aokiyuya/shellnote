@@ -14,7 +14,7 @@ set cpo&vim
 
 augroup shellnote
 	autocmd!
-	autocmd VimEnter :call shellnote#init_command_hist()<CR>
+	autocmd VimEnter * :call shellnote#init_command_hist()<CR>
 augroup END
 
 nnoremap <Leader>@ :call shellnote#bash_out()<CR>
