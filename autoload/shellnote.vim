@@ -4,8 +4,6 @@
 
 scriptencoding utf-8
 
-let s:shellnote_port = 2828
-let s:shellnote_server = expand('<sfile>:p:h').'shellnotelib.py'
 
 function! shellnote#bash_out() abort
 	let a:cmd = getline('.')
@@ -29,12 +27,15 @@ function! shellnote#previous_command() abort
 endfunction
 
 function!  shellnote#init_command_hist() abort
+	let s:shellnote_port = 2828
+	let s:shellnote_server = expand('<sfile>:p:h').'/shellnotelib.py'
 	let b:shellnote_pref = localtime()
 	let b:shellnore_filename = expand('%:p')
 	let b:shellnore_procid = 0
 	echo "test"
+	echo s:shellnote_server
 	" サーバー立ち上げ
-	execute ":! python ".s:shellnote_server." &"
+	" execute ":! python ".s:shellnote_server." &"
 endfunction
 
 function! shellnote#kill() abort
