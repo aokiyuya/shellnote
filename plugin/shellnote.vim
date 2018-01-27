@@ -3,6 +3,8 @@
 " License: MIT
 
 
+let s:shellnote_server = expand('<sfile>:p:h').'/autoload/shellnotelib.py'
+let s:shellnotelib_dir = expand('<sfile>:p:h').'/autoload'
 if exists('g:loaded_shellnote')
   finish
 endif

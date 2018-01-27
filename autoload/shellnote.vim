@@ -4,6 +4,8 @@
 
 scriptencoding utf-8
 
+let s:shellnote_server = expand('<sfile>:p:h').'/shellnotelib.py'
+let s:shellnotelib_dir = expand('<sfile>:p:h').''
 
 function! shellnote#bash_out() abort
 	let a:cmd = getline('.')
@@ -56,8 +58,6 @@ endfunction
 
 function!  shellnote#init_command_hist() abort
 	let b:shellnote_port = localtime()%10000 + 30000
-	let s:shellnote_server = expand('<sfile>:p:h').'/autoload/shellnotelib.py'
-	let s:shellnotelib_dir = expand('<sfile>:p:h').'/autoload'
 	let s:shellnote_splittag = "<shellnote_split>"
 	let b:shellnote_pref = localtime()
 	let b:shellnore_filename = expand('%:p')
