@@ -8,6 +8,7 @@ import re
 from collections import deque
 import socket
 import os
+import sys
 
 
 class Shellnote(object):
@@ -21,13 +22,15 @@ class Shellnote(object):
         with open(filename) as fp:
             for line in fp.readlines():
                 self.command_hist.append(line)
-        self.save_hist_index(len(self.command_hist) - 1)
+        self.save_hist_index(len(self.command_hist))
 
     def add_hist(self, command):
         if command in self.command_hist:
             self.command_hist.remove(command)
         self.command_hist.append(command)
-        self.save_hist_index(len(self.command_hist) - 1)
+        self.save_hist_index(len(self.command_hist))
+        # 通信する際に一貫性をとるため文字列を返す
+        return 'SUCCESS'
 
     def load_prev_hist(self, now_command=None):
         if now_command is not None:
@@ -42,7 +45,6 @@ class Shellnote(object):
                 self.index = self.index + 1
         else:
             self.index = self.command_hist.index(now_command)
-        print(self.index)
         return self.command_hist[self.index]
 
     def save_hist_index(self, index):
@@ -51,18 +53,19 @@ class Shellnote(object):
 
 def command_classify(string, shellnote):
     command, args = string.split('<shellnote_split>')
-    print(command, '<>', args, '<>')
+    # print(command, '<>', args, '<>')
     if re.match('^\s*$', args):
         args = ''
+    else:
+        args = '\'' + args + '\''
     # print(dir(shellnote))
     if command in dir(shellnote):
         return eval("shellnote." + command + '(' + args + ')')
-    return ''
+    return 'None'
 
 
-def server_start():
+def server_start(port=2828):
     host = ''
-    port = 2828
     shellnote = Shellnote()
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as server:
         server.bind((host, port))
@@ -73,23 +76,23 @@ def server_start():
             if re.match('^exit', recv_data):
                 break
             result = command_classify(recv_data, shellnote)
-            print(result)
+            # print(result)
             client_socket.sendall(result.encode('utf-8'))
-            print("test")
-        print(recv_data)
+        # print(recv_data)
         client_socket.sendall('SUCCESS'.encode('utf-8'))
 
 
-def server_send(msg):
+def server_send(msg, port=2828):
     host = ''
-    port = 2828
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         s.connect((host, port))
         s.sendall(msg.encode('utf-8'))
         data = s.recv(1024)
-    print(data.decode('utf-8'))
+    # print(data.decode('utf-8'))
+    return data.decode('utf-8')
 
 
 if __name__ == '__main__':
-    server_start()
+    # print(sys.argv)
+    server_start(int(sys.argv[1]))
 # EOF
