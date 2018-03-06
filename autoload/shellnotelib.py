@@ -21,7 +21,9 @@ class Shellnote(object):
     def fileread(self, filename):
         with open(filename) as fp:
             for line in fp.readlines():
-                self.command_hist.append(line)
+                if line == '':
+                    continue
+                self.command_hist.append(line[:-1])
         self.save_hist_index(len(self.command_hist))
 
     def add_hist(self, command):
@@ -39,9 +41,9 @@ class Shellnote(object):
             self.index = self.index - 1
         return self.command_hist[self.index]
 
-    def load_new_hist(self, now_command=None):
+    def load_next_hist(self, now_command=None):
         if now_command is None:
-            if self.index < len(self.command_hist) - 2:
+            if self.index < len(self.command_hist) - 1:
                 self.index = self.index + 1
         else:
             self.index = self.command_hist.index(now_command)
@@ -58,6 +60,7 @@ def command_classify(string, shellnote):
         args = ''
     else:
         args = '\'' + args + '\''
+
     # print(dir(shellnote))
     if command in dir(shellnote):
         return eval("shellnote." + command + '(' + args + ')')

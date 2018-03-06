@@ -16,6 +16,7 @@ set cpo&vim
 
 command! -nargs=0 ShellnoteInit call shellnote#init_command_hist()
 command! -nargs=? ShellnotePrev call shellnote#previous_command(<f-args>)
+command! -nargs=? ShellnoteNext call shellnote#next_command(<f-args>)
 
 augroup shellnote
 	autocmd!
@@ -26,6 +27,7 @@ ShellnoteInit
 
 nnoremap <Leader>@ :call shellnote#bash_out()<CR>
 nnoremap <C-p> :ShellnotePrev<CR>
+nnoremap <C-n> :ShellnoteNext<CR>
 
 
 let &cpo = s:save_cpo

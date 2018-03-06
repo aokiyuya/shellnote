@@ -23,7 +23,7 @@ sys.path.append(shellnotelib_dir)
 splittag = vim.eval('s:shellnote_splittag')
 import shellnotelib as shl
 result = shl.server_send('add_hist' + splittag + vim.eval('a:cmd'), int(vim.eval('b:shellnote_port')))
-print(result)
+# print(result)
 EOF
 	normal! o
 	execute ":r! ".a:cmd
@@ -39,7 +39,6 @@ function! shellnote#previous_command(...) abort
 		let a:now_corsor = a:1
 	else
 		let a:now_corsor = line('.')
-		echo a:now_corsor
 	end
 python3 << EOF
 import sys
@@ -49,6 +48,27 @@ sys.path.append(shellnotelib_dir)
 splittag = vim.eval('s:shellnote_splittag')
 import shellnotelib as shl
 result = shl.server_send('load_prev_hist' + splittag, int(vim.eval('b:shellnote_port')))
+vim.command("let a:prev = \"" + result + "\"")
+EOF
+	" execute ":normal G".a:now."S" . a:prev
+	call setline(a:now_corsor, '>'.a:prev)
+	normal! $
+endfunction
+
+function! shellnote#next_command(...) abort
+	if a:0 >= 1
+		let a:now_corsor = a:1
+	else
+		let a:now_corsor = line('.')
+	end
+python3 << EOF
+import sys
+import vim
+shellnotelib_dir = vim.eval('s:shellnotelib_dir')
+sys.path.append(shellnotelib_dir)
+splittag = vim.eval('s:shellnote_splittag')
+import shellnotelib as shl
+result = shl.server_send('load_next_hist' + splittag, int(vim.eval('b:shellnote_port')))
 vim.command("let a:prev = \"" + result + "\"")
 EOF
 	" execute ":normal G".a:now."S" . a:prev
